@@ -1,22 +1,49 @@
-import React from "react";
-import { connect } from "react-redux"
+import React, { useState, useReducer } from"react";
 
 import Todo from "./Todo";
+import { initialState, reducer } from "../reducers/todoReducer";
+import { ADD_ITEM } from "../actions/actions";
 
-const TodoList = props => {
+
+const TodoList = () => {
+    const [state, dispatch] = useReducer(reducer, initialState);
+    const [newItemText, setNewItemText] = useState("");
+
+    const handleChanges = e => {
+        setNewItemText(e.target.vaue);
+    };
+
+    console.log(newItemText);
+
     return (
-        <ul className="task-list">
-            {props.state.map(task => (
-                <Todo task={task} />
-            ))}
-        </ul>
+        <div>
+            <ul className="task-list">
+                {state.map(task => (
+                    <Todo key={task.item} task={task} />
+                ))}
+            </ul>
+            <input
+                className="add-input"
+                name="todo"
+                type="text"
+                placeholder="Enter a task"
+                value={newItemText}
+                onChange={handleChanges}
+            />
+            <button
+                className="add-button"
+                onClick={(newItemText) => dispatch({ type: ADD_ITEM, payload: newItemText })}
+            >
+                Add a Task
+            </button>
+            <button
+                className="add-button"
+                onClick={null}
+            >
+                Remove Completed
+            </button>
+            </div>
     )
 }
 
-const mapStateToProps = state => {
-    return {
-        state: state
-    }
-};
-
-export default connect(mapStateToProps)(TodoList);
+export default TodoList;
