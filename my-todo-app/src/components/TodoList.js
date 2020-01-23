@@ -2,7 +2,7 @@ import React, { useState, useReducer } from"react";
 
 import Todo from "./Todo";
 import { initialState, reducer } from "../reducers/todoReducer";
-import { ADD_ITEM } from "../actions/actions";
+import { ADD_ITEM, TOGGLE_COMPLETE, REMOVE_COMPLETED, TOGGLE_COMPLETED } from "../actions/actions";
 
 
 const TodoList = props => {
@@ -11,7 +11,7 @@ const TodoList = props => {
 
     const handleChanges = e => {
         console.log(e.target.value)
-        setNewItemText(e.target.vaue);
+        setNewItemText(e.target.value);
     };
 
     console.log(newItemText);
@@ -20,7 +20,12 @@ const TodoList = props => {
         <div>
             <ul className="task-list">
                 {state.map(task => (
+                    <li
+                        className={task.completed ? "completed" : "outstanding"} 
+                        onClick={() => dispatch({ type: TOGGLE_COMPLETED, payload: task.id })}
+                    >
                     <Todo key={task.item} task={task} />
+                    </li>
                 ))}
             </ul>
             <input
@@ -39,7 +44,7 @@ const TodoList = props => {
             </button>
             <button
                 className="add-button"
-                onClick={null}
+                onClick={() => dispatch({ type: REMOVE_COMPLETED })}
             >
                 Remove Completed
             </button>
