@@ -8,6 +8,7 @@ export const initialState = [
 ];
 
 export const reducer = (state = initialState, action) => {
+    console.log(action)
     switch(action.type) {
         case ADD_ITEM:
             return [
@@ -33,3 +34,4 @@ export const reducer = (state = initialState, action) => {
             return state;
     }
 }
+

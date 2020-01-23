@@ -5,11 +5,12 @@ import { initialState, reducer } from "../reducers/todoReducer";
 import { ADD_ITEM } from "../actions/actions";
 
 
-const TodoList = () => {
+const TodoList = props => {
     const [state, dispatch] = useReducer(reducer, initialState);
     const [newItemText, setNewItemText] = useState("");
 
     const handleChanges = e => {
+        console.log(e.target.value)
         setNewItemText(e.target.vaue);
     };
 
@@ -32,7 +33,7 @@ const TodoList = () => {
             />
             <button
                 className="add-button"
-                onClick={(newItemText) => dispatch({ type: ADD_ITEM, payload: newItemText })}
+                onClick={() => dispatch({ type: ADD_ITEM, payload: newItemText })}
             >
                 Add a Task
             </button>
